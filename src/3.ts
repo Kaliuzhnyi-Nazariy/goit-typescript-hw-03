@@ -8,6 +8,8 @@
 */
 
 // реалізація класу Wizard
+import { ICharacter, ISpellCaster } from './for task 3/interfases';
+
 class Wizard implements ICharacter, ISpellCaster {
   constructor(public name: string, public level: number) {
     if (this.level < 1) {
