@@ -25,20 +25,15 @@ abstract class House {
     }
   }
 
-  openDoor(key: Key): void {
-    if (key) {
-      this.door = true;
-    }
-  }
+  abstract openDoor(key: Key): void;
 }
 
 class MyHouse extends House {
   private key: Key;
 
-  constructor(savedKey: Key) {
-    super(savedKey);
-    if (savedKey === this.key) {
-      this.openDoor(this.key);
+  openDoor(key: Key): void {
+    if (key === this.key) {
+      this.door = true;
     }
   }
 }
