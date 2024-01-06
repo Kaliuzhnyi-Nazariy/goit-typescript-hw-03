@@ -1,64 +1,55 @@
 class Key {
-  constructor(private signature: number) {
-    this.signature = Math.random();
-    return this;
-  }
+  private signature: number = Math.random();
 
-  getSignaure(signature: number) {
-    return signature;
+  getSignaure(): number {
+    return this.signature;
   }
 }
 
-class Pearson {
-  private key: Key;
-
-  getKey() {
+class Person {
+  constructor(private key: Key) {}
+  getKey(): Key {
     return this.key;
   }
 }
 
 abstract class House {
-  door: boolean;
-  key: Key;
-  tenants: object[] = [];
-  pearson: Pearson;
+  protected door: boolean = false;
+  private tenants: object[] = [];
 
-  //   constructor(
-  //     door: boolean,
-  //     key: Key,
-  //     tenants: object[] = [],
-  //     pearson: Pearson
-  //   ) {}
+  constructor(key: Key) {}
 
-  comeIn(pearson: Pearson) {
+  comeIn(pearson: Person): void {
     if (this.door) {
       this.tenants.push(pearson);
     }
   }
 
-  openDoor(key: Key) {
+  openDoor(key: Key): void {
     if (key) {
-      return true;
+      this.door = true;
     }
-    return false;
   }
 }
 
 class MyHouse extends House {
-  key: Key;
+  private key: Key;
 
-  constructor(savedKey: object) {
-    super();
+  constructor(savedKey: Key) {
+    super(savedKey);
+    if (savedKey === this.key) {
+      this.openDoor(this.key);
+    }
   }
 }
 
-// const key = new Key();
+const key = new Key();
 
-// const house = new MyHouse(key);
-// const person = new Person(key);
+const house = new MyHouse(key);
+const person = new Person(key);
 
-// house.openDoor(person.getKey());
+house.openDoor(person.getKey());
 
-// house.comeIn(person);
+house.comeIn(person);
 
 export {};
